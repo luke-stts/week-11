@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nusantara Avian — Katalog Ayam Hias</title>
+  <style>
+    :root {
+      --bg-page: #f7f5f0;
+      --bg-card: #ffffff;
+      --text-main: #2c2825;
+      --text-muted: #6e675f;
+      --accent: #3d5a45;
+      --gold: #b08943;
+      --border: #e4dfd5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--accent);
+      color: #ffffff;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 4px solid var(--gold);
+    }
+
+    .brand-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #e6d5b8;
+      margin-bottom: 0.5rem;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      max-width: 620px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+      color: #dce5de;
+    }
+
+    .catalog-meta {
+      max-width: 1180px;
+      margin: 2rem auto 1.25rem;
+      padding: 0 1.5rem 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .catalog-meta h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .catalog-count {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto 4rem;
+      padding: 0 1.5rem;
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-image {
+      height: 220px;
+      background-color: #eceae4;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .badge-origin {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background-color: rgba(255, 255, 255, 0.92);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-category {
+      font-size: 0.75rem;
+      color: var(--gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-title {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+
+    .card-specs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .spec-pill {
+      font-size: 0.75rem;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .card-footer {
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .unit {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      background-color: #24211e;
+      color: #b8b2a8;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    footer strong {
+      color: #ffffff;
+    }
+
+    .footer-note {
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: #8a8378;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="brand-tag">Katalog Resmi Koleksi Unggas</span>
+    <h1>Nusantara Avian</h1>
+    <p>Etalase ayam hias pilihan berkualitas kontes dan peliharaan eksotis dari berbagai ras lokal maupun mancanegara.</p>
+  </header>
+
+  <section class="catalog-meta">
+    <h2>Daftar Koleksi Ayam Hias</h2>
+    <span class="catalog-count" id="total-produk"></span>
+  </section>
+
+  <main>
+    <div class="catalog-grid" id="catalog-container"></div>
+  </main>
+
+  <footer>
+    <p><strong>Nusantara Avian</strong> — Toko Online Ayam Hias</p>
+    <p class="footer-note">Tampilan Katalog Statis &bull; Jl. Raya Pertanian No. 45, Bogor</p>
+  </footer>
+
+  <script>
+    const daftarAyamHias = [
+      {
+        nama: "Appenzeller Spitzhauben",
+        gambar: "ayam/Appenzeller_Spitzhauben_chicken_…_af2cc71d.jpg",
+        kategori: "Ras Jambul Eropa",
+        asal: "Swiss",
+        deskripsi: "Ayam ras pegunungan Alpen dengan jambul runcing ke depan dan pola bulu bintik hitam-putih yang kontras.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.750.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Pelung Cianjur",
+        gambar: "ayam/Ayam_Pelung_chicken_standing_f7756c4a.jpg",
+        kategori: "Ras Suara Merdu",
+        asal: "Indonesia",
+        deskripsi: "Ayam hias asli Jawa Barat yang tersohor karena postur tegap dan suara kokoknya yang panjang serta beralun merdu.",
+        usia: "Dewasa (10 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.600.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Serama Kontes",
+        gambar: "ayam/Ayam_Serama_chicken_standing_ba8f9659.jpg",
+        kategori: "Ras Mini",
+        asal: "Malaysia",
+        deskripsi: "Ayam terkecil di dunia dengan gaya berdiri tegak, dada membusung ke depan, dan sayap turun menyentuh tanah.",
+        usia: "Siap Kontes",
+        status: "Tersedia",
+        harga: "Rp 1.850.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Cemani Hitam",
+        gambar: "ayam/Black_chicken_standing_on_backdrop_4228c0c0.jpg",
+        kategori: "Ras Eksotis Lokal",
+        asal: "Indonesia",
+        deskripsi: "Ayam berwarna hitam pekat menyeluruh dari bulu, paruh, jengger, hingga kaki. Sangat dicari oleh kolektor unggas.",
+        usia: "Dewasa (8 Bln)",
+        status: "Tersedia",
+        harga: "Rp 2.500.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Brahma",
+        gambar: "ayam/Brahma_chicken_standing_on_backdrop_fe1221f3.jpg",
+        kategori: "Ras Raksasa",
+        asal: "India / AS",
+        deskripsi: "Dikenal sebagai raja segala ayam karena ukuran tubuhnya yang masif dan bulu tebal yang menyelimuti kaki.",
+        usia: "Remaja (6 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.450.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam Hias Klasik",
+        gambar: "ayam/Chicken_standing_on_gray_studio_be7f3653.jpg",
+        kategori: "Ras Klasik",
+        asal: "Eropa",
+        deskripsi: "Ayam berpostur proporsional dengan kilau bulu rapi dan jengger merah cerah, cocok sebagai penghias pekarangan.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 750.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Cochin",
+        gambar: "ayam/Cochin_chicken_standing_on_backdrop_905aa861.jpg",
+        kategori: "Ras Bulu Lebat",
+        asal: "Tiongkok",
+        deskripsi: "Berbentuk bulat menggemaskan dengan bulu sangat tebal dan halus hingga menutupi cakar. Berwatak tenang dan jinak.",
+        usia: "Dewasa (8 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.300.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam Crevecoeur",
+        gambar: "ayam/Crevecoeur_chicken_standing_on_b…_36de6414.jpg",
+        kategori: "Ras Jambul Antik",
+        asal: "Prancis",
+        deskripsi: "Ras tua asal Normandia dengan bulu hitam berkilau kehijauan, jambul lebat, dan jengger berbentuk huruf V.",
+        usia: "Dewasa (8 Bln)",
+        status: "Stok Terbatas",
+        harga: "Rp 1.900.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Frizzle (Walik)",
+        gambar: "ayam/Frizzle_chicken_standing_on_back…_ed36e7e8.jpg",
+        kategori: "Ras Bulu Unik",
+        asal: "Asia",
+        deskripsi: "Memiliki keunikan genetik berupa helai bulu yang melengkung terbalik ke arah luar menyerupai kelopak bunga.",
+        usia: "Dewasa (6 Bln)",
+        status: "Tersedia",
+        harga: "Rp 850.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Hamburg",
+        gambar: "ayam/Hamburg_chicken_standing_on_back…_de2f0001.jpg",
+        kategori: "Ras Hias Eropa",
+        asal: "Belanda",
+        deskripsi: "Bertubuh ramping elegan dengan corak bulu tutul teratur, jengger mawar, serta cuping telinga berwarna putih bersih.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.150.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Houdan",
+        gambar: "ayam/Houdan_chicken_standing_on_backdrop_fb39032b.jpg",
+        kategori: "Ras Jambul",
+        asal: "Prancis",
+        deskripsi: "Berasal dari Prancis dengan ciri khas jambul kepala besar, janggut bulu, pola tutul hitam-putih, dan lima jari kaki.",
+        usia: "Dewasa (7 Bln)",
+        status: "Stok Terbatas",
+        harga: "Rp 1.650.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Japanese Bantam (Chabo)",
+        gambar: "ayam/Japanese_Bantam_chicken_standing_6a88c6fb.jpg",
+        kategori: "Ras Mini",
+        asal: "Jepang",
+        deskripsi: "Ayam kate berkaki sangat pendek dengan ekor tegak menjulang tinggi hampir menyentuh bagian belakang kepala.",
+        usia: "Dewasa (6 Bln)",
+        status: "Tersedia",
+        harga: "Rp 900.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam La Fleche",
+        gambar: "ayam/La_Fleche_chicken_standing_5fbf721d.jpg",
+        kategori: "Ras Eksotis",
+        asal: "Prancis",
+        deskripsi: "Terkenal dengan jengger tanduk ganda unik di atas kepala serta bulu hitam pekat mengilap yang tampak gagah.",
+        usia: "Dewasa (8 Bln)",
+        status: "Pre-Order",
+        harga: "Rp 2.100.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Marans",
+        gambar: "ayam/Marans_chicken_standing_on_backdrop_28b52463.jpg",
+        kategori: "Ras Dwi-Fungsi Hias",
+        asal: "Prancis",
+        deskripsi: "Memiliki bulu gelap dengan aksen tembaga di leher. Terkenal pula sebagai penghasil telur bercangkang cokelat tua.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.100.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Modern Game Bantam",
+        gambar: "ayam/Modern_Game_Bantam_chicken_standing_9685a430.jpg",
+        kategori: "Ras Mini Tegap",
+        asal: "Inggris",
+        deskripsi: "Ayam hias mini berkaki jenjang sangat panjang dan tubuh ramping tegak. Sangat populer di arena pameran unggas.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.250.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Onagadori",
+        gambar: "ayam/Onagadori_chicken_standing_on_fa…_83a2c9fa.jpg",
+        kategori: "Ras Ekor Panjang",
+        asal: "Jepang",
+        deskripsi: "Ras pusaka Jepang yang bulu ekornya dapat tumbuh memanjang terus-menerus hingga melampaui satu setengah meter.",
+        usia: "Remaja (6 Bln)",
+        status: "Stok Terbatas",
+        harga: "Rp 3.200.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Orpington",
+        gambar: "ayam/Orpington_chicken_standing_on_ba…_8b96f05b.jpg",
+        kategori: "Ras Bulu Tebal",
+        asal: "Inggris",
+        deskripsi: "Berbadan lebar dengan bulu lembut mengembang, berpenampilan tenang dan bersahabat untuk dipelihara di halaman.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.350.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam Pekin Bantam",
+        gambar: "ayam/Pekin_Bantam_chicken_standing_on…_c1134d13.jpg",
+        kategori: "Ras Mini",
+        asal: "Tiongkok",
+        deskripsi: "Versi mini dari Cochin dengan bentuk tubuh bulat pendek dan bulu kaki lebat yang menyembunyikan cakarnya.",
+        usia: "Dewasa (6 Bln)",
+        status: "Tersedia",
+        harga: "Rp 850.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam Phoenix",
+        gambar: "ayam/Phoenix_chicken_standing_on_back…_5ef1bb52.jpg",
+        kategori: "Ras Ekor Panjang",
+        asal: "Jerman",
+        deskripsi: "Hasil pengembangan ras Onagadori di Eropa dengan ekor panjang menjuntai anggun dan warna bulu keemasan atau perak.",
+        usia: "Dewasa (8 Bln)",
+        status: "Tersedia",
+        harga: "Rp 2.200.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Poland (Polish)",
+        gambar: "ayam/Polish_chicken_standing_in_studio_a593227c.jpg",
+        kategori: "Ras Jambul",
+        asal: "Belanda",
+        deskripsi: "Memiliki mahkota bulu bundar yang sangat lebat di atas kepala hingga menutupi mata, menjadikannya tampil nyentrik.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 950.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Rosecomb Bantam",
+        gambar: "ayam/Rosecomb_Bantam_chicken_standing_c63c8542.jpg",
+        kategori: "Ras Mini Kontes",
+        asal: "Inggris",
+        deskripsi: "Ayam mini berjengger mawar rapi dengan cuping telinga putih mencolok serta bulu ekor melengkung lebar.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.050.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Sebright (Kate Batik)",
+        gambar: "ayam/Sebright_chicken_standing_in_studio_71a4eca2.jpg",
+        kategori: "Ras Mini",
+        asal: "Inggris",
+        deskripsi: "Setiap helai bulunya berbingkai garis hitam tegas menyerupai ukiran batik. Salah satu ayam kate paling populer.",
+        usia: "Dewasa (6 Bln)",
+        status: "Tersedia",
+        harga: "Rp 700.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam Silkie (Kapas)",
+        gambar: "ayam/Silkie_chicken_standing_on_backdrop_15c26f09.jpg",
+        kategori: "Ras Bulu Halus",
+        asal: "Tiongkok",
+        deskripsi: "Memiliki tekstur bulu selembut sutra atau kapas, kulit kebiruan, dan jambul empuk di kepala. Sangat ramah pada anak-anak.",
+        usia: "Dewasa (6 Bln)",
+        status: "Tersedia",
+        harga: "Rp 800.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam Sultan",
+        gambar: "ayam/Sultan_chicken_standing_on_backdrop_01b74826.jpg",
+        kategori: "Ras Istana",
+        asal: "Turki",
+        deskripsi: "Dahulu dipelihara di taman istana Ottoman. Berbulu putih bersih dengan jambul, janggut, bulu kaki lebat, dan lima jari.",
+        usia: "Dewasa (8 Bln)",
+        status: "Stok Terbatas",
+        harga: "Rp 2.400.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Sumatra",
+        gambar: "ayam/Sumatra_chicken_standing_on_back…_a787cc5c.jpg",
+        kategori: "Ras Eksotis Lokal",
+        asal: "Indonesia",
+        deskripsi: "Ayam asli Pulau Sumatra berbulu hitam kehijauan metalik, ekor panjang melengkung rendah, dan tatapan mata tajam.",
+        usia: "Dewasa (8 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.950.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Sussex",
+        gambar: "ayam/Sussex_chicken_standing_on_backdrop_4bb3b530.jpg",
+        kategori: "Ras Hias Eropa",
+        asal: "Inggris",
+        deskripsi: "Ayam klasik Inggris dengan pola bulu kontras di bagian leher dan ekor. Mudah beradaptasi dan berpostur gagah.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.100.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam Vorwerk",
+        gambar: "ayam/Vorwerk_chicken_standing_on_back…_4668ca3b.jpg",
+        kategori: "Ras Hias Eropa",
+        asal: "Jerman",
+        deskripsi: "Memiliki kombinasi warna mencolok antara kepala serta ekor hitam pekat dengan badan berwarna kuning keemasan.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.350.000",
+        satuan: "/ ekor"
+      },
+      {
+        nama: "Ayam Wyandotte",
+        gambar: "ayam/Wyandotte_chicken_standing_on_ba…_cebf4e21.jpg",
+        kategori: "Ras Corak Laced",
+        asal: "Amerika Serikat",
+        deskripsi: "Berbadan membulat dengan pola bulu berbingkai rapi dan jengger mawar yang manis. Sangat digemari di kontes kecantikan unggas.",
+        usia: "Dewasa (7 Bln)",
+        status: "Tersedia",
+        harga: "Rp 1.250.000",
+        satuan: "/ pasang"
+      },
+      {
+        nama: "Ayam Yokohama",
+        gambar: "ayam/Yokohama_chicken_standing_in_studio_70630eb0.jpg",
+        kategori: "Ras Ekor Panjang",
+        asal: "Jepang / Jerman",
+        deskripsi: "Berbulu putih bersih atau merah pelana dengan ekor panjang menjuntai lembut dan jengger kacang yang rapi.",
+        usia: "Dewasa (8 Bln)",
+        status: "Stok Terbatas",
+        harga: "Rp 2.300.000",
+        satuan: "/ ekor"
+      }
+    ];
+
+    function renderKatalog() {
+      const container = document.getElementById("catalog-container");
+      const totalLabel = document.getElementById("total-produk");
+
+      totalLabel.textContent = `Menampilkan ${daftarAyamHias.length} jenis ayam hias`;
+
+      const htmlCards = daftarAyamHias.map((item) => `
+        <article class="card">
+          <div class="card-image">
+            <span class="badge-origin">${item.asal}</span>
+            <img src="${item.gambar}" alt="${item.nama}" loading="lazy">
+          </div>
+          <div class="card-body">
+            <span class="card-category">${item.kategori}</span>
+            <h3 class="card-title">${item.nama}</h3>
+            <p class="card-desc">${item.deskripsi}</p>
+            <div class="card-specs">
+              <span class="spec-pill">${item.usia}</span>
+              <span class="spec-pill">${item.status}</span>
+            </div>
+            <div class="card-footer">
+              <span class="price">${item.harga}</span>
+              <span class="unit">${item.satuan}</span>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      container.innerHTML = htmlCards;
+    }
+
+    renderKatalog();
+  </script>
+</body>
+</html>

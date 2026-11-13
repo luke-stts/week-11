@@ -1,0 +1,36 @@
+ Volume in drive W is Thawspace
+ Volume Serial Number is F828-1795
+
+ Directory of W:\WEB-DKV-2026\TOKO\ayam
+
+13/11/2026  01:43           701.593 Appenzeller_Spitzhauben_chicken_._af2cc71d.jpg
+13/11/2026  01:43           714.540 Ayam_Pelung_chicken_standing_f7756c4a.jpg
+13/11/2026  01:43           733.192 Ayam_Serama_chicken_standing_ba8f9659.jpg
+13/11/2026  01:43           666.179 Black_chicken_standing_on_backdrop_4228c0c0.jpg
+13/11/2026  01:43           759.727 Brahma_chicken_standing_on_backdrop_fe1221f3.jpg
+13/11/2026  01:43           655.562 Chicken_standing_on_gray_studio_be7f3653.jpg
+13/11/2026  01:43           724.150 Cochin_chicken_standing_on_backdrop_905aa861.jpg
+13/11/2026  01:43           698.882 Crevecoeur_chicken_standing_on_b._36de6414.jpg
+13/11/2026  01:43           709.972 Frizzle_chicken_standing_on_back._ed36e7e8.jpg
+13/11/2026  01:43           736.026 Hamburg_chicken_standing_on_back._de2f0001.jpg
+13/11/2026  01:43           735.966 Houdan_chicken_standing_on_backdrop_fb39032b.jpg
+13/11/2026  01:43           658.633 Japanese_Bantam_chicken_standing_6a88c6fb.jpg
+13/11/2026  01:43           698.119 La_Fleche_chicken_standing_5fbf721d.jpg
+13/11/2026  01:43           735.131 Marans_chicken_standing_on_backdrop_28b52463.jpg
+13/11/2026  01:43           667.181 Modern_Game_Bantam_chicken_standing_9685a430.jpg
+13/11/2026  01:43           775.636 Onagadori_chicken_standing_on_fa._83a2c9fa.jpg
+13/11/2026  01:43           712.569 Orpington_chicken_standing_on_ba._8b96f05b.jpg
+13/11/2026  01:43           731.992 Pekin_Bantam_chicken_standing_on._c1134d13.jpg
+13/11/2026  01:43           697.664 Phoenix_chicken_standing_on_back._5ef1bb52.jpg
+13/11/2026  01:43           793.428 Polish_chicken_standing_in_studio_a593227c.jpg
+13/11/2026  01:43           743.895 Rosecomb_Bantam_chicken_standing_c63c8542.jpg
+13/11/2026  01:43           744.459 Sebright_chicken_standing_in_studio_71a4eca2.jpg
+13/11/2026  01:43           652.783 Silkie_chicken_standing_on_backdrop_15c26f09.jpg
+13/11/2026  01:43           651.644 Sultan_chicken_standing_on_backdrop_01b74826.jpg
+13/11/2026  01:43           667.807 Sumatra_chicken_standing_on_back._a787cc5c.jpg
+13/11/2026  01:43           721.787 Sussex_chicken_standing_on_backdrop_4bb3b530.jpg
+13/11/2026  01:43           648.557 Vorwerk_chicken_standing_on_back._4668ca3b.jpg
+13/11/2026  01:43           798.532 Wyandotte_chicken_standing_on_ba._cebf4e21.jpg
+13/11/2026  01:43           715.833 Yokohama_chicken_standing_in_studio_70630eb0.jpg
+              29 File(s)     20.651.439 bytes
+               0 Dir(s)  12.079.841.280 bytes free
