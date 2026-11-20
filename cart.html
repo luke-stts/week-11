@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang Belanja — Nusantara Avian</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="site-topbar"></div>
+
+  <header class="hero compact">
+    <span class="brand-tag">Langkah 1 dari 3</span>
+    <h1>Keranjang Belanja</h1>
+    <p>Atur jumlah pesanan atau hapus item sebelum melanjutkan ke halaman checkout.</p>
+  </header>
+
+  <main class="page-container">
+    <div id="cart-root"></div>
+  </main>
+
+  <footer>
+    <p><strong>Nusantara Avian</strong> — Toko Online Ayam Hias</p>
+    <p class="footer-note">Simulasi Pemesanan &amp; Pembayaran QRIS &bull; Jl. Raya Pertanian No. 45, Bogor</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      const store = window.NAStore;
+      store.renderTopbar("cart");
+
+      const root = document.getElementById("cart-root");
+
+      function renderCart() {
+        const cart = store.getCart();
+
+        if (cart.length === 0) {
+          root.innerHTML =
+            '<div class="panel empty-state">' +
+            '  <h3>Keranjang belanja masih kosong</h3>' +
+            '  <p>Silakan pilih koleksi ayam hias terlebih dahulu dari halaman katalog.</p>' +
+            '  <a href="index.html" class="btn btn-primary">Kembali ke Katalog</a>' +
+            '</div>';
+          return;
+        }
+
+        const totals = store.getCartTotals(50000);
+        const totalQty = store.getCartCount();
+
+        const itemsHtml = cart.map(function (item) {
+          const itemSubtotal = item.hargaNum * item.qty;
+          return (
+            '<div class="cart-item" data-id="' + store.escapeHtml(item.id) + '">' +
+            '  <img class="cart-thumb" src="' + store.escapeHtml(item.gambar) + '" alt="' + store.escapeHtml(item.nama) + '">' +
+            '  <div class="cart-item-info">' +
+            '    <h3>' + store.escapeHtml(item.nama) + '</h3>' +
+            '    <div class="cart-item-meta">Satuan: ' + store.escapeHtml(item.satuan) + '</div>' +
+            '    <div class="cart-item-unit-price">' + store.formatRupiah(item.hargaNum) + ' ' + store.escapeHtml(item.satuan) + '</div>' +
+            '  </div>' +
+            '  <div class="cart-item-actions">' +
+            '    <div class="qty-control">' +
+            '      <button type="button" class="qty-btn btn-dec" data-id="' + store.escapeHtml(item.id) + '" aria-label="Kurangi jumlah">&minus;</button>' +
+            '      <input type="number" class="qty-input" min="1" max="99" value="' + item.qty + '" data-id="' + store.escapeHtml(item.id) + '" aria-label="Jumlah">' +
+            '      <button type="button" class="qty-btn btn-inc" data-id="' + store.escapeHtml(item.id) + '" aria-label="Tambah jumlah">+</button>' +
+            '    </div>' +
+            '    <div class="cart-item-subtotal">' + store.formatRupiah(itemSubtotal) + '</div>' +
+            '    <button type="button" class="btn btn-danger-outline btn-sm btn-remove" data-id="' + store.escapeHtml(item.id) + '">Hapus</button>' +
+            '  </div>' +
+            '</div>'
+          );
+        }).join("");
+
+        root.innerHTML =
+          '<div class="two-col">' +
+          '  <section class="panel">' +
+          '    <div class="panel-title">' +
+          '      <span>Daftar Item (' + totalQty + ')</span>' +
+          '      <button type="button" class="btn btn-danger-outline btn-sm" id="btn-clear-cart">Kosongkan Keranjang</button>' +
+          '    </div>' +
+          '    <div>' + itemsHtml + '</div>' +
+          '  </section>' +
+          '  <aside class="panel">' +
+          '    <div class="panel-title"><span>Ringkasan Belanja</span></div>' +
+          '    <div class="summary-row">' +
+          '      <span>Subtotal (' + totalQty + ' item)</span>' +
+          '      <strong>' + store.formatRupiah(totals.subtotal) + '</strong>' +
+          '    </div>' +
+          '    <div class="summary-row">' +
+          '      <span>Estimasi Pengiriman Unggas</span>' +
+          '      <strong>' + store.formatRupiah(totals.ongkir) + '</strong>' +
+          '    </div>' +
+          '    <hr class="summary-divider">' +
+          '    <div class="summary-total">' +
+          '      <span>Grand Total</span>' +
+          '      <span>' + store.formatRupiah(totals.grandTotal) + '</span>' +
+          '    </div>' +
+          '    <a href="checkout.html" class="btn btn-primary btn-block">Lanjut ke Checkout &rarr;</a>' +
+          '    <a href="index.html" class="btn btn-outline btn-block" style="margin-top:0.6rem;">+ Tambah Ayam Lainnya</a>' +
+          '  </aside>' +
+          '</div>';
+      }
+
+      root.addEventListener("click", function (e) {
+        const decBtn = e.target.closest(".btn-dec");
+        if (decBtn) {
+          const id = decBtn.getAttribute("data-id");
+          const item = store.getCart().find(function (c) { return c.id === id; });
+          if (item) {
+            if (item.qty <= 1) {
+              store.removeFromCart(id);
+              store.showToast(item.nama + " dihapus dari keranjang");
+            } else {
+              store.updateCartQty(id, item.qty - 1);
+            }
+            renderCart();
+          }
+          return;
+        }
+
+        const incBtn = e.target.closest(".btn-inc");
+        if (incBtn) {
+          const id = incBtn.getAttribute("data-id");
+          const item = store.getCart().find(function (c) { return c.id === id; });
+          if (item) {
+            store.updateCartQty(id, item.qty + 1);
+            renderCart();
+          }
+          return;
+        }
+
+        const removeBtn = e.target.closest(".btn-remove");
+        if (removeBtn) {
+          const id = removeBtn.getAttribute("data-id");
+          const item = store.getCart().find(function (c) { return c.id === id; });
+          store.removeFromCart(id);
+          if (item) store.showToast(item.nama + " dihapus dari keranjang");
+          renderCart();
+          return;
+        }
+
+        if (e.target.id === "btn-clear-cart") {
+          store.clearCart();
+          store.showToast("Keranjang dikosongkan");
+          renderCart();
+        }
+      });
+
+      root.addEventListener("change", function (e) {
+        const input = e.target.closest(".qty-input");
+        if (!input) return;
+        const id = input.getAttribute("data-id");
+        const val = parseInt(input.value, 10);
+        if (isNaN(val) || val < 1) {
+          store.updateCartQty(id, 1);
+        } else {
+          store.updateCartQty(id, val);
+        }
+        renderCart();
+      });
+
+      store.onRealtimeUpdate(function () {
+        renderCart();
+      });
+
+      renderCart();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terima Kasih — Nusantara Avian</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="site-topbar"></div>
+
+  <header class="hero compact">
+    <span class="brand-tag">Konfirmasi Pesanan</span>
+    <h1>Terima Kasih atas Pesanan Anda</h1>
+    <p>Berikut adalah ringkasan struk dan status pembayaran pesanan Anda di Nusantara Avian.</p>
+  </header>
+
+  <main class="page-container narrow">
+    <div id="thankyou-root"></div>
+  </main>
+
+  <footer>
+    <p><strong>Nusantara Avian</strong> — Toko Online Ayam Hias</p>
+    <p class="footer-note">Simulasi Pemesanan &amp; Pembayaran QRIS &bull; Jl. Raya Pertanian No. 45, Bogor</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      const store = window.NAStore;
+      store.renderTopbar("history");
+
+      const root = document.getElementById("thankyou-root");
+      const params = new URLSearchParams(window.location.search);
+      let orderId = params.get("order");
+
+      if (!orderId) {
+        const all = store.getOrders();
+        if (all.length > 0) orderId = all[0].id;
+      }
+
+      let lastStatus = null;
+
+      function renderThankYou(force) {
+        const order = orderId ? store.getOrderById(orderId) : null;
+
+        if (!order) {
+          root.innerHTML =
+            '<div class="panel empty-state">' +
+            '  <h3>Data pesanan tidak ditemukan</h3>' +
+            '  <p>Silakan lihat daftar transaksi Anda di halaman riwayat transaksi.</p>' +
+            '  <a href="history.html" class="btn btn-primary">Buka Riwayat Transaksi</a>' +
+            '</div>';
+          return;
+        }
+
+        if (!force && lastStatus === order.status) return;
+        lastStatus = order.status;
+
+        const bannerHtml =
+          order.status === "PAID"
+            ? '<div class="realtime-banner paid" style="margin-top:0; margin-bottom:1.25rem;">' +
+              '  <strong>&#10003; Pembayaran QRIS Lunas (PAID)</strong><br>' +
+              '  Terima kasih, <strong>' + store.escapeHtml(order.customer.nama) + '</strong>! Pembayaran Anda telah diverifikasi pada ' + store.escapeHtml(store.formatWaktu(order.paidAt)) + ' (Ref: <code>' + store.escapeHtml(order.approvalRef || "-") + '</code>).' +
+              '</div>'
+            : order.status === "REJECTED"
+            ? '<div class="realtime-banner rejected" style="margin-top:0; margin-bottom:1.25rem;">' +
+              '  <strong>&#10005; Pembayaran Ditolak</strong><br>' +
+              '  Transaksi ini ditolak pada ' + store.escapeHtml(store.formatWaktu(order.rejectedAt)) + '.' +
+              '</div>'
+            : '<div class="realtime-banner" style="margin-top:0; margin-bottom:1.25rem;">' +
+              '  <strong>Menunggu Pembayaran QRIS</strong><br>' +
+              '  Status halaman ini akan berubah otomatis menjadi <strong>PAID</strong> begitu pembayaran di-approve. ' +
+              '  <a href="payment.html?order=' + encodeURIComponent(order.id) + '" style="text-decoration:underline; color:var(--accent); font-weight:600;">Kembali ke QRIS</a>' +
+              '</div>';
+
+        const rowsHtml = order.items.map(function (it) {
+          return (
+            '<tr>' +
+            '  <td><strong>' + store.escapeHtml(it.nama) + '</strong><br><small style="color:var(--text-muted);">' + store.formatRupiah(it.hargaNum) + ' ' + store.escapeHtml(it.satuan) + '</small></td>' +
+            '  <td style="text-align:center;">' + it.qty + '</td>' +
+            '  <td style="text-align:right;"><strong>' + store.formatRupiah(it.subtotal) + '</strong></td>' +
+            '</tr>'
+          );
+        }).join("");
+
+        root.innerHTML =
+          '<section class="panel">' +
+          '  <div class="panel-title">' +
+          '    <span>Struk Pesanan &bull; ' + store.escapeHtml(order.id) + '</span>' +
+          '    <span>' + store.renderStatusBadge(order.status) + '</span>' +
+          '  </div>' +
+          '  ' + bannerHtml +
+          '  <div class="form-row" style="margin-bottom:1.25rem; font-size:0.88rem;">' +
+          '    <div>' +
+          '      <div style="color:var(--text-muted); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em;">Data Penerima</div>' +
+          '      <div><strong>' + store.escapeHtml(order.customer.nama) + '</strong></div>' +
+          '      <div>' + store.escapeHtml(order.customer.telepon) + '</div>' +
+          '      <div>' + store.escapeHtml(order.customer.alamat) + ', ' + store.escapeHtml(order.customer.kota) + '</div>' +
+          (order.customer.catatan ? '<div style="color:var(--text-muted); margin-top:0.2rem;">Catatan: ' + store.escapeHtml(order.customer.catatan) + '</div>' : '') +
+          '    </div>' +
+          '    <div>' +
+          '      <div style="color:var(--text-muted); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.04em;">Info Transaksi</div>' +
+          '      <div>Tanggal Order: ' + store.escapeHtml(store.formatWaktu(order.createdAt)) + '</div>' +
+          '      <div>Metode Bayar: <strong>' + store.escapeHtml(order.paymentMethod) + '</strong> (' + store.escapeHtml(order.qrisRef) + ')</div>' +
+          '      <div>Pengiriman: ' + store.escapeHtml(order.shippingMethod) + '</div>' +
+          '    </div>' +
+          '  </div>' +
+          '  <div class="table-wrap">' +
+          '    <table class="data-table">' +
+          '      <thead>' +
+          '        <tr>' +
+          '          <th>Produk</th>' +
+          '          <th style="text-align:center;">Qty</th>' +
+          '          <th style="text-align:right;">Subtotal</th>' +
+          '        </tr>' +
+          '      </thead>' +
+          '      <tbody>' + rowsHtml + '</tbody>' +
+          '    </table>' +
+          '  </div>' +
+          '  <div style="max-width:320px; margin-left:auto; margin-top:1rem;">' +
+          '    <div class="summary-row"><span>Subtotal</span><strong>' + store.formatRupiah(order.subtotal) + '</strong></div>' +
+          '    <div class="summary-row"><span>Ongkos Kirim</span><strong>' + (order.ongkir === 0 ? "Gratis" : store.formatRupiah(order.ongkir)) + '</strong></div>' +
+          '    <hr class="summary-divider">' +
+          '    <div class="summary-total" style="margin-bottom:0;"><span>Grand Total</span><span>' + store.formatRupiah(order.grandTotal) + '</span></div>' +
+          '  </div>' +
+          '  <div class="no-print" style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.75rem; padding-top:1.25rem; border-top:1px solid var(--border);">' +
+          '    <a href="history.html" class="btn btn-primary">Lihat Riwayat Transaksi</a>' +
+          '    <a href="index.html" class="btn btn-outline">Belanja Lagi</a>' +
+          '    <button type="button" class="btn btn-outline" id="btn-print-receipt">Cetak Struk</button>' +
+          '  </div>' +
+          '</section>';
+
+        const printBtn = document.getElementById("btn-print-receipt");
+        if (printBtn) {
+          printBtn.addEventListener("click", function () {
+            window.print();
+          });
+        }
+      }
+
+      store.onRealtimeUpdate(function () {
+        renderThankYou(false);
+      });
+
+      setInterval(function () {
+        renderThankYou(false);
+      }, 1000);
+
+      renderThankYou(true);
+    })();
+  </script>
+</body>
+</html>
